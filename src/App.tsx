@@ -23,6 +23,8 @@ const App = () => {
   const [lastUpdated, setLastUpdated] = useState('');
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [isUpdatingTimestamps, setIsUpdatingTimestamps] = useState(false);
   const [copiedOrderId, setCopiedOrderId] = useState<string | null>(null);
 
   const fetchData = async () => {
@@ -72,6 +74,40 @@ const App = () => {
     }
   };
 
+  const syncOrders = async () => {
+    setIsSyncing(true);
+    setError('');
+    
+    try {
+      await axios.post(`${apiUrl}/sync`, {});
+      setError('Orders synchronized successfully!');
+      // Refresh data after sync
+      await fetchData();
+    } catch (err: any) {
+      setError('Failed to sync orders: ' + err.message);
+      console.error(err);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const updateTimestamps = async () => {
+    setIsUpdatingTimestamps(true);
+    setError('');
+    
+    try {
+      await axios.post(`${apiUrl}/updateTimestamps`, {});
+      setError('Timestamps updated successfully!');
+      // Refresh data after updating timestamps
+      await fetchData();
+    } catch (err: any) {
+      setError('Failed to update timestamps: ' + err.message);
+      console.error(err);
+    } finally {
+      setIsUpdatingTimestamps(false);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -88,7 +124,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E0F5F5] to-[#A7E4E0] p-8 text-gray-800 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-[#E0F5F5] to-[#A7E4E0] p-4 md:p-8 text-gray-800 font-sans">
       <style>{datePickerStyles}</style>
       <div id="portal">
         <DateRangeForm
@@ -99,6 +135,10 @@ const App = () => {
           lastUpdated={lastUpdated}
           error={error}
           onSubmit={handleSubmit}
+          onSyncOrders={syncOrders}
+          onUpdateTimestamps={updateTimestamps}
+          isSyncing={isSyncing}
+          isUpdatingTimestamps={isUpdatingTimestamps}
         />
         <AverageDurationsTable averagesData={averagesData} isFetching={isFetching} isBitcoin={false} />
         <AverageDurationsTable averagesData={averagesData} isFetching={isFetching} isBitcoin={true} />
