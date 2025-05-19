@@ -49,7 +49,7 @@ const DateRangeForm: React.FC<DateRangeFormProps> = ({
           <button
             type="submit"
             disabled={isSyncing || isUpdatingTimestamps}
-            className={`w-full sm:w-auto bg-[#F06292] hover:bg-[#F06292]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg ${
+            className={`w-full sm:w-auto bg-[#F06292] hover:bg-[#F06292]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg cursor-pointer ${
               isUpdatingTimestamps || isSyncing ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >
@@ -59,7 +59,7 @@ const DateRangeForm: React.FC<DateRangeFormProps> = ({
             type="button"
             onClick={onSyncOrders}
             disabled={isSyncing}
-            className={`w-full sm:w-auto bg-[#42A5F5] hover:bg-[#42A5F5]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg ${
+            className={`w-full sm:w-auto bg-[#42A5F5] hover:bg-[#42A5F5]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg invisible cursor-pointer ${
               isSyncing ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >
@@ -69,7 +69,7 @@ const DateRangeForm: React.FC<DateRangeFormProps> = ({
             type="button"
             onClick={onUpdateTimestamps}
             disabled={isUpdatingTimestamps || isSyncing}
-            className={`w-full sm:w-auto bg-[#66BB6A] hover:bg-[#66BB6A]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg ${
+            className={`w-full sm:w-auto bg-[#66BB6A] hover:bg-[#66BB6A]/80 text-white font-bold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg invisible cursor-pointer ${
               isUpdatingTimestamps || isSyncing ? 'opacity-70 cursor-not-allowed' : ''
             }`}
           >
